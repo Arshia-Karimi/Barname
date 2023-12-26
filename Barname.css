@@ -54,3 +54,51 @@ input {
   display: table;
   clear: both;
 }
+.container .taksList {
+  max-height: 300px;
+  overflow-y: auto;
+}
+.taksList {
+  list-style-type: none;
+}
+.taksList li {
+  cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  background: #eee;
+  font-size: 18px;
+  transition: 0.3s;
+  /* make the list item unselectable; */
+  user-select: none;
+  border-bottom: 1px solid black;
+}
+ul li :hover {
+  background: rgb(205, 204, 204);
+}
+.closeBtn {
+  display: none;
+  position: absolute;
+  right: 15px;
+}
+ul li:hover .closeBtn {
+  display: inline-block;
+}
+ul li .closeBtn i:hover {
+  color: red;
+}
+.taksList li.done {
+  background-color: #888;
+  color: white;
+  text-decoration: line-through;
+}
+.taksList li.done::before {
+  content: "";
+  width: 10px;
+  height: 20px;
+  position: absolute;
+  left: 15px;
+  border-color: black;
+  border-width: 0 2px 2px 0;
+  border-style: solid;
+  transform: rotate(45deg);
+}
