@@ -17,6 +17,7 @@ body {
   padding: 15px 40px 30px;
   color: white;
   text-align: center;
+  border-radius: 10px;
 }
 .container .header h2 {
   margin: 10px;
