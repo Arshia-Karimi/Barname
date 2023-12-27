@@ -45,6 +45,3 @@ ul li .closeBtn i:hover {
   border-style: solid;
   transform: rotate(45deg);
 }
-.hidden {
-  display: none;
-}

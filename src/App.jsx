@@ -11,12 +11,13 @@ const App = () => {
       const localItems = ("toDos", JSON.parse(ser));
       setToDos(localItems);
     }
-  } ,[]);
+  }, []);
 
   const [inputValue, setInputValue] = useState("");
   const addToDo = () => {
+    console.log("add");
     if (inputValue !== "") {
-      const newValue = [...toDos, inputValue];
+      const newValue = [...toDos, { text: inputValue, isChecked: false }];
       setToDos(newValue);
 
       localStorage.setItem("toDos", JSON.stringify(newValue));
@@ -29,6 +30,57 @@ const App = () => {
     setToDos(newBox);
     localStorage.setItem("toDos", JSON.stringify(newBox));
   };
+
+  // const checkOnclick = (text) => {
+  //   const index = toDos.findIndex((item) => item.text === text);
+  //   let newArray = [];
+  //   if (index > -1) {
+  //     const updateObject = {
+  //       ...toDos[index],
+  //       isChecked: true,
+  //     };
+  //     newArray = [
+  //       ...toDos.slice(0, index),
+  //       updateObject,
+  //       ...toDos.slice(index + 1),
+  //     ];
+  //     setToDos(newArray);
+  //     localStorage.setItem("toDos", JSON.stringify(newArray));
+  //   }
+  // };
+
+  const checkOnclick = (text) => {
+    const index = toDos.findIndex((item) => item.text === text);
+    const isCheckedItem = toDos[index].isChecked;
+    let newArray = [];
+    if (index > -1) {
+      if (isCheckedItem) {
+        const updateObject = {
+          ...toDos[index],
+          isChecked: false,
+        };
+        newArray = [
+          ...toDos.slice(0, index),
+          updateObject,
+          ...toDos.slice(index + 1),
+        ];
+        setToDos(newArray);
+        localStorage.setItem("toDos", JSON.stringify(newArray));
+      } else {
+        const updateObject = {
+          ...toDos[index],
+          isChecked: true,
+        };
+        newArray = [
+          ...toDos.slice(0, index),
+          updateObject,
+          ...toDos.slice(index + 1),
+        ];
+        setToDos(newArray);
+        localStorage.setItem("toDos", JSON.stringify(newArray));
+      }
+    }
+  };
   return (
     <div className="container">
       <div className="header">
@@ -36,7 +88,6 @@ const App = () => {
         <input
           type="text"
           placeholder="title..."
-          autocomplete="off"
           value={inputValue}
           onChange={(a) => setInputValue(a.target.value)}
         />
@@ -48,7 +99,9 @@ const App = () => {
         return (
           <BarnameBox
             deleteHandler={() => deleteHandler(index)}
-            text={item}
+            checkOnclick={() => checkOnclick(item.text)}
+            text={item.text}
+            isChecked={item.isChecked}
             key={index}
           />
         );
